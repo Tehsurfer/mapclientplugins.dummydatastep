@@ -1,0 +1,6 @@
+
+<RCC>
+  <qresource prefix="dumydatastep">
+    <file>images/512px-Test_tube_icon.svg.png</file>
+  </qresource>
+</RCC>
