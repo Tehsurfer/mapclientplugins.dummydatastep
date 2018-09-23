@@ -52,6 +52,8 @@ class DumyDataStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
+        
+        # Data can be pasted here to send to other steps for testing, or grabbed from a file if we have larger data
         ecgGrid = [[0.509204852009174, -0.5311370349544523, -0.0034167299250837833],
                    [0.5395357502061648, -0.510145753072639, -0.007247427797009046],
                    [0.5672355599089255, -0.48703701801970584, -0.012153448140377348],
