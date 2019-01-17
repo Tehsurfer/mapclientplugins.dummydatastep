@@ -133,12 +133,13 @@ class DumyDataStep(WorkflowStepMountPoint):
         '''
 
         ecg_dict = {}
-        ecg_dict['time_array'] = np.linspace(0,16).tolist()
+        ecg_dict['time_array'] = np.linspace(0,2).tolist()
 
         for i, coords in enumerate(ecgGrid):
             ecg_dict[str(i)] = []
             for j, time in enumerate(ecg_dict['time_array']):
-                ecg_dict[str(i)].append(list(np.array(ecgGrid[i])+(i/len(ecgGrid))*(j/len(ecg_dict['time_array']))))
+                ecg_dict[str(i)].append([coords[0], coords[1] - (time/2 * i/len(ecgGrid)), coords[2]])
+
 
 
 
