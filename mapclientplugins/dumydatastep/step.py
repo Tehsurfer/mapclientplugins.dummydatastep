@@ -26,7 +26,7 @@ class DumyDataStep(WorkflowStepMountPoint):
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'ecg_grid_points'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#time_based_electrode_scaffold_positions'))
         # Port data:
         self._portData0 = None # ecg_grid_points
 
@@ -142,7 +142,7 @@ class DumyDataStep(WorkflowStepMountPoint):
 
 
 
-        self._portData0 = ecgGrid
+        self._portData0 = ecg_dict
 
 
         return self._portData0 # ecg_grid_points
