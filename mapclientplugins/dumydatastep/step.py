@@ -7,6 +7,7 @@ from PySide import QtGui
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.dumydatastep.configuredialog import ConfigureDialog
 import json
+import numpy as np
 
 class DumyDataStep(WorkflowStepMountPoint):
     """
@@ -118,6 +119,28 @@ class DumyDataStep(WorkflowStepMountPoint):
                    [0.42255639587899896, -0.528623181459634, -0.24955697203879074],
                    [0.42812246280518906, -0.5169032763742534, -0.2830736218406812],
                    [0.4258422580102747, -0.4988688315180695, -0.3197970327671987]]
+
+        '''
+        Want to export in the form of 'time based node descriptions' in ecg step.
+        1. node_time_sequence = self._time_based_node_description['time_array']
+        
+        so: export['time_array'] = [time1, time2,time3...]
+        
+        2. node_locations = self._time_based_node_description['{0}'.format(node_identifier)]
+        
+        so: export[{node_identifier}] = node_locations ([0,.5,.6],[0,.5,.7]...)
+        
+        '''
+
+        ecg_dict = {}
+        ecg_dict['time_array'] = np.linspace(0,16).tolist()
+
+        for i, coords in enumerate(ecgGrid):
+            ecg_dict[str(i)] = []
+            for j, time in enumerate(ecg_dict['time_array']):
+                ecg_dict[str(i)].append(list(np.array(ecgGrid[i])+(i/len(ecgGrid))*(j/len(ecg_dict['time_array']))))
+
+
 
         self._portData0 = ecgGrid
 
