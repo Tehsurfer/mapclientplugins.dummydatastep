@@ -1,7 +1,7 @@
 
 
 from PySide import QtGui
-from mapclientplugins.meshgeneratorstep.ui_configuredialog import Ui_ConfigureDialog
+from mapclientplugins.dumydatastep.ui_configuredialog import Ui_ConfigureDialog
 
 INVALID_STYLE_SHEET = 'background-color: rgba(239, 0, 0, 50)'
 DEFAULT_STYLE_SHEET = ''
