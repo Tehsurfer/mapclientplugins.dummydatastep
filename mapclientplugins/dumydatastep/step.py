@@ -133,20 +133,58 @@ class DumyDataStep(WorkflowStepMountPoint):
         '''
 
         ecg_dict = {}
-        ecg_dict['time_array'] = np.linspace(0,2).tolist()
+        maxtime = 2
+        ecg_dict['time_array'] = np.linspace(0,maxtime).tolist()
+
+        F = np.array([[1. , 0. , 0. ],
+                      [0. , 2. , 0.5],
+                      [0. , 0.5, 1. ]])
+
+        transformed_points = ecgGrid @ F
 
         for i, coords in enumerate(ecgGrid):
             ecg_dict[str(i)] = []
+
             for j, time in enumerate(ecg_dict['time_array']):
-                ecg_dict[str(i)].append([coords[0], coords[1] - (time/2 * i/len(ecgGrid)), coords[2]])
+                ecg_dict[str(i)].append(list((1-(time/maxtime))*np.array(coords) + (time/maxtime)*transformed_points[i]))
 
 
 
 
         self._portData0 = ecg_dict
 
+        points = [ecg_dict['0'][0], ecg_dict['1'][0],ecg_dict['8'][0]]
+        points_dash = [ecg_dict['0'][1], ecg_dict['1'][1],ecg_dict['8'][1]]
+
+        strain = self.calculate_strain_on_element(points, points_dash)
+
+        # strains = self.create_strain_arrays(self.convert_dict_to_array(ecg_dict))
+
+        F = np.linalg.solve(points, points_dash)
+        C = F.T @ F
+        E = .5 * (C - np.identity(3))
 
         return self._portData0 # ecg_grid_points
+
+
+    def convert_dict_to_array(self, dictionary):
+        array = []
+        for key in dictionary:
+            if key is not 'time_array':
+                array.append(dictionary[key])
+        return array
+
+    def calculate_strain_on_element(self, points, points_dash):
+
+        F = np.linalg.solve(points, points_dash)
+        C = F.T @ F
+        E = .5 * (C - np.identity(3))
+        return E
+
+
+
+
+
 
     def configure(self):
         """
